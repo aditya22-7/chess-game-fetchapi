@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table testing</title>
+  </head>
+  <body>
+    <div id="main-table"></div>
+
+    <script>
+      let table1 = document.createElement("table");
+      let thead = document.createElement("thead");
+      table1.appendChild(thead);
+      let _th = document.createElement("th");
+      _th.innerHTML = " ";
+      thead.appendChild(_th);
+      let th1 = document.createElement("th");
+      th1.innerHTML = "a";
+      thead.appendChild(th1);
+      let th2 = document.createElement("th");
+      th2.innerHTML = "b";
+      thead.appendChild(th2);
+      let th3 = document.createElement("th");
+      th3.innerHTML = "c";
+      thead.appendChild(th3);
+      let _th_ = document.createElement("th");
+      _th_.innerHTML = " ";
+      thead.appendChild(_th_);
+      let main_table = document.getElementById("main-table");
+      main_table.appendChild(table1);
+    </script>
+  </body>
+</html>

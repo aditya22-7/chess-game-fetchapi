@@ -1,0 +1,28 @@
+button {
+  height: 3em;
+  width: 8em;
+}
+table {
+  background-color: lavenderblush;
+  border-style: solid;
+  border-width: 0.2em;
+}
+td.black {
+  background-color: rosybrown;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+}
+td.white {
+  background-color: white;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+}
+td.displayrow {
+  background-color: inherit;
+  width: 1em;
+  height: 2em;
+  text-align: center;
+  color: slategray;
+}

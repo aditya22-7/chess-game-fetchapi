@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/controller.js"></script>
+    <link rel="stylesheet" href="rpi-chess.css" />
+    <script>
+      fetch("/startposition")
+        .then((response) => response.json())
+        .then(renderchess); // .then((data)=>rendechess(data)) its the same thing, when reference variable is passed
+      // directly to .then handler func call with argument is done by javascript automatically.
+
+      function nextChar(c) {
+        return String.fromCharCode(c.charCodeAt(0) + 1);
+      }
+      function prevChar(c) {
+        return String.fromCharCode(c.charCodeAt(0) - 1);
+      }
+
+      function createFilesHeader(side) {
+        let thead = document.createElement("thead");
+        if (side === "white") {
+          thead.appendChild(document.createElement("th"));
+          for (var colname = "a"; colname <= "h"; colname = nextChar(colname)) {
+            let th = document.createElement("th");
+            thead.appendChild(th);
+            th.innerHTML = colname;
+            th.setAttribute("class", "edge");
+          }
+          thead.appendChild(document.createElement("th"));
+        } else {
+          thead.appendChild(document.createElement("th"));
+          for (var colname = "h"; colname >= "a"; colname = prevChar(colname)) {
+            let th = document.createElement("th");
+            thead.appendChild(th);
+            th.innerHTML = colname;
+            th.setAttribute("class", "edge");
+          }
+          thead.appendChild(document.createElement("th"));
+        }
+        return thead;
+      }
+
+      function createBoard(table, boardposition, side) {
+        if (side === "white") {
+          for (var row = 7; row >= 0; row--) {
+            var tr = document.createElement("TR");
+            table.appendChild(tr);
+            tr.id = "tr" + (row + 1);
+            var td = document.createElement("TD");
+            tr.appendChild(td);
+            td.innerHTML = row + 1;
+            td.className = "displayrow";
+            for (var col = 0; col <= 7; col++) {
+              td = document.createElement("TD");
+              td.style.fontSize = "2em";
+              td.innerHTML = boardposition[7 - row][col];
+              td.addEventListener("click", (e) => {
+                Controller.dispatch(e);
+              });
+              td.setAttribute("data-row", row);
+              td.setAttribute("data-col", col);
+              td.setAttribute("data-side", true);
+              if ((row + col) % 2 == 0) {
+                td.setAttribute("class", "black");
+              } else {
+                td.setAttribute("class", "white");
+              }
+              tr.appendChild(td);
+            }
+            td = document.createElement("TD");
+            tr.appendChild(td);
+            td.innerHTML = row + 1;
+            td.className = "displayrow";
+          }
+        } else {
+          for (var row = 0; row <= 7; row++) {
+            var tr = document.createElement("TR");
+            table.appendChild(tr);
+            tr.id = "tr" + (row + 1);
+            var td = document.createElement("TD");
+            tr.appendChild(td);
+            td.innerHTML = row + 1;
+            td.className = "displayrow";
+            for (var col = 7; col >= 0; col--) {
+              td = document.createElement("TD");
+              td.style.fontSize = "2em";
+              td.innerHTML = boardposition[7 - row][col];
+              td.addEventListener("click", (e) => {
+                Controller.dispatch(e);
+              });
+              td.setAttribute("data-row", row);
+              td.setAttribute("data-col", col);
+              td.setAttribute("data-side", false);
+              if ((row + col) % 2 == 0) {
+                td.setAttribute("class", "black");
+              } else {
+                td.setAttribute("class", "white");
+              }
+              tr.appendChild(td);
+            }
+            td = document.createElement("TD");
+            tr.appendChild(td);
+            td.innerHTML = row + 1;
+            td.className = "displayrow";
+          }
+        }
+      }
+
+      function renderBoard(root, boardposition) {
+        // Table will be at the root of rpiChessDOM
+        let table = document.createElement("table");
+        let side = root.dataset["side"];
+        // Attach table to root
+        root.appendChild(table);
+        // Create header-file for board
+        table.appendChild(createFilesHeader(side));
+        createBoard(table, boardposition, side);
+        // Create footer-file for board
+        table.appendChild(createFilesHeader(side));
+      }
+
+      function renderchess(b) {
+        let c1 = document.getElementById("chessboard1");
+        let c2 = document.getElementById("chessboard2");
+        if (c1.firstChild) c1.removeChild(c1.firstChild);
+        if (c2.firstChild) c2.removeChild(c2.firstChild);
+        renderBoard(document.getElementById("chessboard1"), b);
+        renderBoard(document.getElementById("chessboard2"), b);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div
+      id="chess"
+      style="display: flex; align-items: center; justify-content: space-around"
+    >
+      <div id="chessboard1" data-side="white"></div>
+      <div id="chessboard2" data-side="black"></div>
+    </div>
+  </body>
+</html>
