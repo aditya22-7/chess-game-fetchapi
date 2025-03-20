@@ -1,3 +1,5 @@
+// Hello World from game.js
+
 function isValidRank(rank) {
   if (rank) {
     return rank >= 1 && rank <= 8;
