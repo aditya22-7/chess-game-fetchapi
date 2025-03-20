@@ -1,5 +1,3 @@
-// Hello World from controller.js
-
 class Controller {
   static #movestarted = false;
   static #from;

@@ -1,4 +1,3 @@
-// Hello World from index.js
 var express = require("express");
 let { game, board } = require("./game");
 var app = express();
